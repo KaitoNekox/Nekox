@@ -1,0 +1,13 @@
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+-- Hacer que el jugador sea siempre el asesino
+local function becomeMurderer()
+    local murderer = game.Players:FindFirstChild("Murderer")
+    if murderer then
+        murderer.Character.HumanoidRootPart.CFrame = character.HumanoidRootPart.CFrame
+    end
+end
+
+-- Ejecutar la función al unirse a un nuevo juego
+game.Players.PlayerAdded:Connect(becomeMurderer)
