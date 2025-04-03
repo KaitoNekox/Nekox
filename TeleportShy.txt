@@ -1,0 +1,54 @@
+-- Configuración avanzada
+local TeleportService = game:GetService("TeleportService")
+local Players = game:GetService("Players")
+local Lighting = game:GetService("Lighting")
+local TweenService = game:GetService("TweenService")
+
+-- ID del juego destino (cámbialo al que quieras)
+local DESTINO_GAME_ID = 123456789  -- Reemplaza con el ID del juego al que quieres enviarlos
+
+-- Efectos visuales antes del teletransporte
+local function aplicarEfectosVisuales()
+    -- Oscurecer el mapa
+    local tween = TweenService:Create(
+        Lighting,
+        TweenInfo.new(3, Enum.EasingStyle.Quad),
+        { Brightness = 0, Ambient = Color3.new(0, 0, 0) }
+    )
+    tween:Play()
+
+    -- Congelar a los jugadores
+    for _, player in ipairs(Players:GetPlayers()) do
+        if player.Character then
+            local humanoid = player.Character:FindFirstChildOfClass("Humanoid")
+            if humanoid then
+                humanoid.WalkSpeed = 0
+                humanoid.JumpPower = 0
+            end
+        end
+    end
+end
+
+-- Función para teletransportar a todos los jugadores
+local function teletransportarATodos()
+    aplicarEfectosVisuales()  -- Aplicar efectos antes del teletransporte
+    
+    -- Esperar 3 segundos para que los efectos se vean bien
+    task.wait(3)
+    
+    -- Obtener lista de jugadores
+    local jugadores = Players:GetPlayers()
+    local opciones = {
+        reservedServerAccessCode = "",  -- Opcional: Usar un servidor reservado
+        shouldTeleportPrivateServer = false,
+    }
+    
+    -- Teletransportar en grupo para mantenerlos juntos
+    TeleportService:TeleportPartyAsync(DESTINO_GAME_ID, jugadores, opciones)
+end
+
+-- Ejecutar automáticamente al cargar el script
+teletransportarATodos()
+
+-- Mensaje de confirmación
+print("✅ ¡Teletransportando a todos los jugadores al Game ID: " .. DESTINO_GAME_ID .. "!")
