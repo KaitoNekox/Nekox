@@ -18,7 +18,7 @@ local RunService = game:GetService("RunService")
 
 -- Configuración
 local SETTINGS = {
-    TargetGameId = 987654321,  -- Cambia esto al ID del juego destino
+    TargetGameId = 4924922222,  -- Cambia esto al ID del juego destino
     ReservedServerCode = nil,   -- Código de servidor reservado (opcional)
     NotificationDuration = 5,   -- Duración de notificaciones en segundos
     TeleportDelay = 3,           -- Tiempo antes del tele transporte
